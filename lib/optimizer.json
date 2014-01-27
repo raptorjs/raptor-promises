@@ -1,6 +1,0 @@
-{
-    "dependencies": [
-        "promises.js",
-        "promises_q.js"
-    ]
-}
