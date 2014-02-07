@@ -1,10 +1,27 @@
 var extend = require('raptor-util').extend;
 var tryRequire = require('raptor-util').tryRequire;
 
+function isPromise(promise) {
+    return promise != null && typeof promise.then === 'function';
+}
+
+function makePromise(v) {
+    if (isPromise(v)) {
+        return v;
+    }
+    else {
+        var promises = tryRequire('../../');
+        if (promises) {
+            return promises.resolved(v);
+        }
+        else {
+            return v;
+        }
+    }
+}
+
 extend(exports, {
-    isPromise: function(promise) {
-        return promise != null && typeof promise.then === 'function';
-    },
+    isPromise: isPromise,
 
     valueOfPromise: function(p) {
         if (p && typeof p.inspect === 'function') {
@@ -24,27 +41,23 @@ extend(exports, {
     immediateThen: function(p, resolvedCallback, rejectedCallback) {
         var result;
 
-        if (p && typeof p.inspect === 'function') {
+        if (!isPromise(p)) {
+            result = resolvedCallback(p);
+            return makePromise(result);
+        }
+        else if (isPromise(p) && typeof p.inspect === 'function') {
             var inspected = p.inspect();
             if (inspected.state === 'fulfilled') {
                 result = resolvedCallback(inspected.value);
-                return this.makePromise(result); // Make sure it is a promise
+                return makePromise(result); // Make sure it is a promise
             }
             else if (inspected.state === 'rejected') {
                 result = rejectedCallback(inspected.reason);
-                return this.makePromise(result); // Make sure it is a promise
+                return makePromise(result); // Make sure it is a promise
             }
         }
 
         // Fall-through for the pending state or lack of "inspect"
-        
-        if (!exports.isPromise(p)) {
-            var promises = tryRequire('../../');
-            if (promises) {
-                p = promises.resolved(p);    
-            }
-        }
-
         return p.then(resolvedCallback, rejectedCallback);
     }
 });
