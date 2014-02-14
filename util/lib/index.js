@@ -24,6 +24,14 @@ extend(exports, {
     isPromise: isPromise,
 
     valueOfPromise: function(p) {
+        if (!p) {
+            return p;
+        }
+
+        if (typeof p.then !== 'function') {
+            return p; //It is not a promise, just return it
+        }
+        
         if (p && typeof p.inspect === 'function') {
             var inspected = p.inspect();
             if (inspected.state === 'fulfilled') {
