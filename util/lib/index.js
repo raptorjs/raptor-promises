@@ -34,7 +34,7 @@ extend(exports, {
             }
         }
         else {
-            return p;
+            return undefined;
         }
     },
 
