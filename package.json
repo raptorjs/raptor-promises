@@ -21,7 +21,7 @@
     },
     "license": "Apache License v2.0",
     "bin": {},
-    "main": "lib/promises.js",
+    "main": "lib/raptor-promises.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     }
