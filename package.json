@@ -1,6 +1,5 @@
 {
     "name": "raptor-promises",
-    "version": "0.2.0-beta",
     "description": "Helper module for working with promises",
     "repository": {
         "type": "git",
@@ -24,5 +23,6 @@
     "main": "lib/raptor-promises.js",
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
-    }
+    },
+    "version": "0.2.1-beta"
 }
