@@ -12,7 +12,7 @@
   "maintainers": "Patrick Steele-Idem <pnidem@gmail.com>",
   "dependencies": {
     "q": "^0.9.7",
-    "raptor-util": "^0.2.0-beta"
+    "raptor-util": "^1.0.0-beta"
   },
   "devDependencies": {
     "mocha": "~1.15.1",
